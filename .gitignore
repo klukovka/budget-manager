@@ -25,7 +25,7 @@ dist/
 
 # JetBrains IDE
 .idea/
-
+.dart_tool/
 # Unit test reports
 TEST*.xml
 
@@ -39,6 +39,8 @@ Thumbs.db
 *.app
 *.exe
 *.war
+*.packages
+*.iml
 
 # Large media files
 *.mp4
