@@ -14,14 +14,14 @@ class BudgetManagerApp extends StatelessWidget {
   }
 
   Map<String, WidgetBuilder> get routes => {
-        SplashScreen.screenName: (context) => SplashScreen(),
+        SplashScreen.screenName: (context) => const SplashScreen(),
       };
 
   ThemeData get theme => ThemeData(
         primaryColor: const Color(0xffe8eaf6),
         accentColor: const Color(0xffd3d5e0),
         splashColor: const Color(0xffd3d5e0),
-        primaryIconTheme: IconThemeData(color: Colors.black),
+        primaryIconTheme: const IconThemeData(color: Colors.black),
         fontFamily: 'Helvetica',
       );
 }
