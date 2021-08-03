@@ -112,5 +112,6 @@ linter:
     - unnecessary_this
     - use_is_even_rather_than_modulo
     - use_named_constants
+
     #Pub rules
     - package_names

@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class BaseBlocWidget<B extends Bloc<E, S>, S, E>
     extends StatelessWidget {
+      
+  const BaseBlocWidget({Key? key}) : super(key: key);
+
   B createBloc(BuildContext context);
 
   Widget createChild(BuildContext context);
