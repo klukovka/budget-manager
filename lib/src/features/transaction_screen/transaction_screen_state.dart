@@ -4,20 +4,22 @@ import 'package:equatable/equatable.dart';
 
 class TransactionScreenState extends Equatable {
   const TransactionScreenState({
+    required this.params,
     this.error,
-    this.loading = false,
-    this.params,
+    this.loading = true,
     this.sum,
     this.transactions,
-    this.isVisible = false,
+    this.isVisibleSearchField = false,
+    this.isVisibleContextMenu = false,
   });
 
-  final TransactionRequestParams? params;
+  final TransactionRequestParams params;
   final bool loading;
   final List<Transaction>? transactions;
   final String? error;
   final double? sum;
-  final bool isVisible;
+  final bool isVisibleSearchField;
+  final bool isVisibleContextMenu;
 
   TransactionScreenState copyWith({
     TransactionRequestParams? params,
@@ -25,7 +27,8 @@ class TransactionScreenState extends Equatable {
     List<Transaction>? transactions,
     String? error,
     double? sum,
-    bool? isVisible,
+    bool? isVisibleSearchField,
+    bool? isVisibleContextMenu,
   }) {
     return TransactionScreenState(
         error: this.error,
@@ -33,7 +36,9 @@ class TransactionScreenState extends Equatable {
         params: params ?? this.params,
         sum: sum ?? this.sum,
         transactions: transactions ?? this.transactions,
-        isVisible: isVisible ?? this.isVisible);
+        isVisibleSearchField: isVisibleSearchField ?? this.isVisibleSearchField,
+        isVisibleContextMenu:
+            isVisibleContextMenu ?? this.isVisibleContextMenu);
   }
 
   @override
@@ -42,6 +47,9 @@ class TransactionScreenState extends Equatable {
         params,
         sum,
         transactions,
-        isVisible,
+        isVisibleSearchField,
+        isVisibleContextMenu,
       ];
+
+
 }

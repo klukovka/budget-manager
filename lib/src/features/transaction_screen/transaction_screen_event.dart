@@ -9,6 +9,12 @@ class SearchFieldEvent extends TransactionScreenEvent {
   final bool visible;
 }
 
+class ContextMenuEvent extends TransactionScreenEvent {
+  ContextMenuEvent({required this.visible});
+
+  final bool visible;
+}
+
 class TransactionScreenParamsEvent extends TransactionScreenEvent {
   TransactionScreenParamsEvent(this.params);
 

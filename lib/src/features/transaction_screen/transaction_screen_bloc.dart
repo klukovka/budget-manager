@@ -19,8 +19,8 @@ class TransactionScreenBloc
             params: TransactionRequestParams(
               sort: const TransactionSortParams(),
               filter: TransactionFilter(
-                minDateOfOperation: DateTime.now(),
-                maxDateOfOperation: DateTime.now().add(
+                maxDateOfOperation: DateTime.now(),
+                minDateOfOperation: DateTime.now().subtract(
                   const Duration(days: 30),
                 ),
               ),
@@ -36,23 +36,24 @@ class TransactionScreenBloc
   Stream<TransactionScreenState> mapEventToState(
       TransactionScreenEvent event) async* {
     if (event is SearchFieldEvent) {
-      yield state.copyWith(isVisible: event.visible);
+      yield state.copyWith(isVisibleSearchField: event.visible);
 
     } else if (event is TransactionScreenParamsEvent) {
       yield* _loadData(event.params);
+
+    } else if (event is ContextMenuEvent) {
+      yield state.copyWith(isVisibleContextMenu: event.visible);
 
     } else if (event is TransactionRemoveEvent) {
       yield* _removeTransactionStream(event);
 
     } else if (event is TransactionScreenReloadEvent) {
       yield* _loadData(state.params);
-
     }
   }
 
   Stream<TransactionScreenState> _removeTransactionStream(
       TransactionRemoveEvent event) async* {
-        
     try {
       await _removeTransaction(event.transaction);
 
@@ -60,13 +61,11 @@ class TransactionScreenBloc
       yield state.copyWith(
         error: '$error',
       );
-
     }
   }
 
   Stream<TransactionScreenState> _loadData(
       TransactionRequestParams? params) async* {
-
     yield state.copyWith(loading: true);
 
     try {
@@ -74,13 +73,12 @@ class TransactionScreenBloc
       final sum = await _calculateSumInteractor(params.filter);
 
       yield state.copyWith(
-        params: params,
-        sum: sum,
-        transactions: transactions,
-      );
+          params: params, sum: sum, transactions: transactions, loading: false);
+          
     } on Exception catch (error) {
       yield state.copyWith(
         error: '$error',
+        loading: false,
       );
     }
   }

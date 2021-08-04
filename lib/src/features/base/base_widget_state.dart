@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class BaseWidgetState<W, B extends Bloc<E, S>, S, E> extends State {
+abstract class BaseWidgetState<W extends StatefulWidget, B extends Bloc<E, S>,
+    S, E> extends State<W> {
   B createBloc(BuildContext context);
 
   Widget createChild(BuildContext context);
@@ -19,6 +20,18 @@ abstract class BaseWidgetState<W, B extends Bloc<E, S>, S, E> extends State {
     return BlocBuilder<B, S>(
       builder: builder,
       buildWhen: buildWhen,
+    );
+  }
+
+  Widget addListener({
+    required void Function(BuildContext, S) listener,
+    required Widget child,
+    bool Function(S, S)? listenWhen,
+  }) {
+    return BlocListener<B, S>(
+      listener: listener,
+      listenWhen: listenWhen,
+      child: child,
     );
   }
 

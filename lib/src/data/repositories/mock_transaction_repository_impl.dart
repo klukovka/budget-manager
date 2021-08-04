@@ -11,7 +11,7 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
   List<Transaction> transactions = [
     Transaction(
         id: '1',
-        amountOfMoney: -100,
+        amountOfMoney: 100,
         dateCreate: DateTime(2021, 7, 12),
         dateOfOperation: DateTime(2021, 7, 12),
         subtype: const TransactionSubtype(
@@ -19,7 +19,7 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         title: 'title1'),
     Transaction(
         id: '2',
-        amountOfMoney: -200,
+        amountOfMoney: 200,
         dateCreate: DateTime(2021, 7, 14),
         dateOfOperation: DateTime(2021, 7, 14),
         subtype: const TransactionSubtype(
@@ -27,7 +27,7 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         title: 'title2'),
     Transaction(
         id: '3',
-        amountOfMoney: -30,
+        amountOfMoney: 30,
         dateCreate: DateTime(2021, 7, 18),
         dateOfOperation: DateTime(2021, 7, 14),
         subtype: const TransactionSubtype(
@@ -35,7 +35,7 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         title: 'title3'),
     Transaction(
         id: '4',
-        amountOfMoney: -2000,
+        amountOfMoney: 2000,
         dateCreate: DateTime(2021, 7, 19),
         dateOfOperation: DateTime(2021, 7, 19),
         subtype: const TransactionSubtype(
@@ -67,7 +67,7 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         title: 'title7'),
     Transaction(
         id: '8',
-        amountOfMoney: -120,
+        amountOfMoney: 120,
         dateCreate: DateTime(2021, 8),
         dateOfOperation: DateTime(2021, 8),
         subtype: const TransactionSubtype(
@@ -75,7 +75,7 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         title: 'title8'),
     Transaction(
         id: '9',
-        amountOfMoney: -90,
+        amountOfMoney: 90,
         dateCreate: DateTime(2021, 8, 2),
         dateOfOperation: DateTime(2021, 8),
         subtype: const TransactionSubtype(
@@ -83,7 +83,7 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         title: 'title9'),
     Transaction(
         id: '10',
-        amountOfMoney: -120.5,
+        amountOfMoney: 120.5,
         dateCreate: DateTime(2021, 8, 3),
         dateOfOperation: DateTime(2021, 8, 3),
         subtype: const TransactionSubtype(
@@ -91,7 +91,7 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         title: 'title10'),
     Transaction(
         id: '11',
-        amountOfMoney: -10,
+        amountOfMoney: 10,
         dateCreate: DateTime(2021, 8, 3),
         dateOfOperation: DateTime(2021, 8, 3),
         subtype: const TransactionSubtype(
@@ -108,8 +108,7 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
   @override
   Future<List<Transaction>> getWithRequestParams(
       TransactionRequestParams requestParams) async {
-    var resultTransactions = await getWithFilter(
-        requestParams.filter)
+    var resultTransactions = await getWithFilter(requestParams.filter)
       ..sort((current, next) => current.dateCreate.compareTo(next.dateCreate));
 
     switch (requestParams.sort.order) {
@@ -169,8 +168,8 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
     return transactions.where((transaction) {
       return _filterByTitle(filter.title, transaction) &&
           _filterByMinAmountOfMoney(filter.minAmountOfMoney, transaction) &&
-          _filterByMaxAmountOfMoney(filter.maxAmountOfMoney, transaction) &&
           _filterByMinDateOfOperation(filter.minDateOfOperation, transaction) &&
+          _filterByMaxAmountOfMoney(filter.maxAmountOfMoney, transaction) &&
           _filterByMaxDateOfOperation(filter.maxDateOfOperation, transaction) &&
           _filterBySubtypes(filter.subtypes, transaction) &&
           _filterByType(filter.type, transaction);
@@ -206,8 +205,8 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
   bool _filterByMinDateOfOperation(
       DateTime? minDateOfOperation, Transaction transaction) {
     if (minDateOfOperation != null) {
-      return minDateOfOperation.isBefore(transaction.dateOfOperation) &&
-            minDateOfOperation.isAtSameMomentAs(transaction.dateOfOperation);
+      return minDateOfOperation.isBefore(
+          transaction.dateOfOperation.subtract(const Duration(days: 1)));
     } else {
       return true;
     }
@@ -216,8 +215,8 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
   bool _filterByMaxDateOfOperation(
       DateTime? maxDateOfOperation, Transaction transaction) {
     if (maxDateOfOperation != null) {
-      return maxDateOfOperation.isAfter(transaction.dateOfOperation) &&
-            maxDateOfOperation.isAtSameMomentAs(transaction.dateCreate);
+      return maxDateOfOperation
+          .isAfter(transaction.dateOfOperation.add(const Duration(days: 1)));
     } else {
       return true;
     }
@@ -225,7 +224,7 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
 
   bool _filterBySubtypes(
       List<TransactionSubtype>? subtypes, Transaction transaction) {
-    if (subtypes != null) {
+    if (subtypes != null && subtypes.isNotEmpty) {
       return subtypes.contains(transaction.subtype);
     } else {
       return true;
