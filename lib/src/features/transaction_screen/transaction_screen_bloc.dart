@@ -19,8 +19,11 @@ class TransactionScreenBloc
             params: TransactionRequestParams(
               sort: const TransactionSortParams(),
               filter: TransactionFilter(
-                maxDateOfOperation: DateTime.now(),
-                minDateOfOperation: DateTime.now().subtract(
+                maxDateOfOperation: DateTime(DateTime.now().year,
+                    DateTime.now().month, DateTime.now().day),
+                minDateOfOperation: DateTime(DateTime.now().year,
+                        DateTime.now().month, DateTime.now().day)
+                    .subtract(
                   const Duration(days: 30),
                 ),
               ),
@@ -46,7 +49,7 @@ class TransactionScreenBloc
 
     } else if (event is TransactionRemoveEvent) {
       yield* _removeTransactionStream(event);
-
+      
     } else if (event is TransactionScreenReloadEvent) {
       yield* _loadData(state.params);
     }
@@ -56,10 +59,10 @@ class TransactionScreenBloc
       TransactionRemoveEvent event) async* {
     try {
       await _removeTransaction(event.transaction);
-
     } on Exception catch (error) {
       yield state.copyWith(
         error: '$error',
+        loading: false,
       );
     }
   }
@@ -74,7 +77,6 @@ class TransactionScreenBloc
 
       yield state.copyWith(
           params: params, sum: sum, transactions: transactions, loading: false);
-          
     } on Exception catch (error) {
       yield state.copyWith(
         error: '$error',
