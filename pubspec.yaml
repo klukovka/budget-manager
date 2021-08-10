@@ -15,6 +15,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_bloc: ^7.1.0
   equatable: ^2.0.3
+  fluttertoast: ^8.0.8
+  multiselect_formfield:
+    git:
+      url: https://github.com/hitshydev/multiselect_formfield
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_lints: ^1.0.4
@@ -28,4 +33,6 @@ flutter:
     - family: Helvetica
       fonts:
         - asset: "assets/helvetica.ttf"
-        - asset: "assets/helvetica_bold.ttf"
+    - family: HelveticaHeavy
+      fonts:
+        - asset: "assets/helvetica_heavy.ttf"
