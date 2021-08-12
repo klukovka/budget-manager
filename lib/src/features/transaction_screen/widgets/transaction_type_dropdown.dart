@@ -18,7 +18,7 @@ class TransactionTypeDropdown extends StatelessWidget {
         ),
         elevation: 5,
         child: Container(
-          width: 200,
+          width: 210,
           height: 150,
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(

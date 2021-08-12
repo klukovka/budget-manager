@@ -3,11 +3,13 @@ import 'package:budget_manager/src/domain/interactors/add_transaction_interactor
 import 'package:budget_manager/src/domain/interactors/update_transaction_interactor.dart';
 import 'package:budget_manager/src/features/transaction_add_edit_screen/transaction_add_edit_event.dart';
 import 'package:budget_manager/src/features/transaction_add_edit_screen/transaction_add_edit_state.dart';
+import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-const _titleInvalid = 'Title must contain more than 3 characters';
-const _amountInvalid = 'Money amount must be a number';
-const _subtypeInvalid = 'Choose the type of operation';
+final _titleInvalid = LocaleKeys.invalidTitle.tr();
+final _amountInvalid = LocaleKeys.invalidMoney.tr();
+final _subtypeInvalid = LocaleKeys.invalidSubtype.tr();
 
 class TransactionAddEditBloc
     extends Bloc<TransactionAddEditEvent, TransactionAddEditState> {
@@ -54,7 +56,6 @@ class TransactionAddEditBloc
       TransactionChangeTitleEvent event) async* {
     if (event.title == null || event.title!.length < 3) {
       yield state.copyWith(titleInvalid: _titleInvalid);
-
     } else {
       yield state.clearInvalidAssignTitle(event.title!);
     }
@@ -77,8 +78,8 @@ class TransactionAddEditBloc
       if (state.amountInvalid != null ||
           state.titleInvalid != null ||
           state.subtypeInvalid != null) {
-        yield state.copyWith(error: 'Incorrect value');
-
+        yield state.copyWith(error: LocaleKeys.error.tr());
+        
       } else {
         yield state.copyWith(loading: true);
 
@@ -97,7 +98,6 @@ class TransactionAddEditBloc
 
         if (event.transaction != null) {
           await _updateInteractor(transaction);
-
         } else {
           await _addInteractor(transaction);
         }

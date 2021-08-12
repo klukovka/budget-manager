@@ -1,143 +1,165 @@
 import 'package:budget_manager/src/domain/entities/transaction_filter.dart';
 import 'package:budget_manager/src/domain/entities/transaction_request_params.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_filter_screen/transaction_filter_screen.dart';
+import 'package:budget_manager/src/features/transaction_screen/transaction_screen_bloc.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_screen_event.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_screen_state.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_sort_screen/transaction_sort_screen.dart';
+import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RequestParamsBar extends StatelessWidget implements PreferredSizeWidget {
   const RequestParamsBar(
-    this.state,
     this.changeState, {
     Key? key,
   }) : super(key: key);
 
-  final TransactionScreenState state;
   final Function(TransactionScreenEvent) changeState;
+
+  Widget observe({
+    required BlocWidgetBuilder<TransactionScreenState> builder,
+    bool Function(TransactionScreenState, TransactionScreenState)? buildWhen,
+  }) {
+    return BlocBuilder<TransactionScreenBloc, TransactionScreenState>(
+      builder: builder,
+      buildWhen: buildWhen,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0.0,
-      title: _buildSearchField(context),
+      title: _buildSearchField(),
       actions: [
         _buildSearchButton(),
-        _buildSortButton(context),
-        _buildFilterButton(context),
+        _buildSortButton(),
+        _buildFilterButton(),
       ],
     );
   }
 
-  Widget _buildSearchField(BuildContext context) {
-    return state.isVisibleSearchField
-        ? TextField(
-            autofocus: true,
-            cursorColor: Theme.of(context).focusColor,
-            style: Theme.of(context).textTheme.bodyText1,
-            decoration: InputDecoration(
-              focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).focusColor)),
-              hintText: 'Input you text here',
-              hintStyle: Theme.of(context).textTheme.subtitle1,
-            ),
-            onChanged: (value) {
-              changeState(
-                TransactionScreenParamsEvent(
-                  TransactionRequestParams(
-                    sort: state.params.sort,
-                    filter: TransactionFilter(
-                      maxAmountOfMoney: state.params.filter.maxAmountOfMoney,
-                      maxDateOfOperation:
-                          state.params.filter.maxDateOfOperation,
-                      minAmountOfMoney: state.params.filter.minAmountOfMoney,
-                      minDateOfOperation:
-                          state.params.filter.minDateOfOperation,
-                      subtypes: state.params.filter.subtypes,
-                      title: value,
-                      type: state.params.filter.type,
+  Widget _buildSearchField() {
+    return observe(builder: (context, state) {
+      return state.isVisibleSearchField
+          ? TextField(
+              autofocus: true,
+              cursorColor: Theme.of(context).focusColor,
+              style: Theme.of(context).textTheme.bodyText1,
+              decoration: InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Theme.of(context).focusColor)),
+                hintText: LocaleKeys.hintSearchInput.tr(),
+                hintStyle: Theme.of(context).textTheme.subtitle1,
+              ),
+              onChanged: (value) {
+                changeState(
+                  TransactionScreenParamsEvent(
+                    TransactionRequestParams(
+                      sort: state.params.sort,
+                      filter: TransactionFilter(
+                        maxAmountOfMoney: state.params.filter.maxAmountOfMoney,
+                        maxDateOfOperation:
+                            state.params.filter.maxDateOfOperation,
+                        minAmountOfMoney: state.params.filter.minAmountOfMoney,
+                        minDateOfOperation:
+                            state.params.filter.minDateOfOperation,
+                        subtypes: state.params.filter.subtypes,
+                        title: value,
+                        type: state.params.filter.type,
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-          )
-        : const SizedBox();
+                );
+              },
+            )
+          : const SizedBox();
+    });
   }
 
   Widget _buildSearchButton() {
-    return IconButton(
-        onPressed: () {
-          changeState(
-            SearchFieldEvent(
-              visible: !state.isVisibleSearchField,
-            ),
-          );
-          changeState(
-            TransactionScreenParamsEvent(
-              TransactionRequestParams(
-                sort: state.params.sort,
-                filter: TransactionFilter(
-                  maxAmountOfMoney: state.params.filter.maxAmountOfMoney,
-                  maxDateOfOperation: state.params.filter.maxDateOfOperation,
-                  minAmountOfMoney: state.params.filter.minAmountOfMoney,
-                  minDateOfOperation: state.params.filter.minDateOfOperation,
-                  subtypes: state.params.filter.subtypes,
-                  type: state.params.filter.type,
-                ),
+    return observe(builder: (context, state) {
+      return IconButton(
+          onPressed: () {
+            changeState(
+              SearchFieldEvent(
+                visible: !state.isVisibleSearchField,
               ),
-            ),
-          );
-        },
-        icon:
-            Icon(state.isVisibleSearchField ? Icons.search_off : Icons.search));
-  }
-
-  Widget _buildSortButton(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        _showDialog(
-          'Ordering',
-          TransactionSortScreen((sort) {
+            );
             changeState(
               TransactionScreenParamsEvent(
                 TransactionRequestParams(
-                  filter: state.params.filter,
-                  sort: sort,
+                  sort: state.params.sort,
+                  filter: TransactionFilter(
+                    maxAmountOfMoney: state.params.filter.maxAmountOfMoney,
+                    maxDateOfOperation: state.params.filter.maxDateOfOperation,
+                    minAmountOfMoney: state.params.filter.minAmountOfMoney,
+                    minDateOfOperation: state.params.filter.minDateOfOperation,
+                    subtypes: state.params.filter.subtypes,
+                    type: state.params.filter.type,
+                  ),
                 ),
               ),
             );
-          }, state.params.sort),
-          context,
-        );
-      },
-      icon: const Icon(Icons.sort),
-    );
+          },
+          icon: Icon(
+              state.isVisibleSearchField ? Icons.search_off : Icons.search));
+    });
   }
 
-  Widget _buildFilterButton(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        _showDialog(
-          'Filter',
-          TransactionFilterScreen(
-            state.params.filter,
-            (filter) {
+  Widget _buildSortButton() {
+    return observe(builder: (context, state) {
+      return IconButton(
+        onPressed: () {
+          _showDialog(
+            LocaleKeys.ordering.tr(),
+            TransactionSortScreen((sort) {
               changeState(
                 TransactionScreenParamsEvent(
                   TransactionRequestParams(
-                    filter: filter,
-                    sort: state.params.sort,
+                    filter: state.params.filter,
+                    sort: sort,
                   ),
                 ),
               );
-            },
-          ),
-          context,
-        );
-      },
-      icon: const Icon(Icons.filter_alt),
-    );
+            }, state.params.sort),
+            context,
+          );
+        },
+        icon: const Icon(Icons.sort),
+      );
+    });
+  }
+
+  Widget _buildFilterButton() {
+    return observe(builder: (context, state) {
+      return IconButton(
+        onPressed: () {
+          _showDialog(
+            LocaleKeys.filter.tr(),
+            TransactionFilterScreen(
+              state.params.filter,
+              (filter) {
+                changeState(
+                  TransactionScreenParamsEvent(
+                    TransactionRequestParams(
+                      filter: filter,
+                      sort: state.params.sort,
+                    ),
+                  ),
+                );
+              },
+            ),
+            context,
+          );
+        },
+        icon: const Icon(Icons.filter_alt),
+      );
+    });
   }
 
   void _showDialog(String title, Widget content, BuildContext context) {

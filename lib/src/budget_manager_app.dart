@@ -1,5 +1,6 @@
 import 'package:budget_manager/src/features/splash_screen/splash_screen.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class BudgetManagerApp extends StatelessWidget {
@@ -8,7 +9,10 @@ class BudgetManagerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.screenName,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      initialRoute: TransactionScreen.screenName,
       routes: routes,
       theme: theme,
     );

@@ -4,11 +4,13 @@ import 'package:budget_manager/src/features/transaction_screen/transaction_filte
 import 'package:budget_manager/src/features/transaction_screen/transaction_filter_screen/transaction_filter_event.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_filter_screen/transaction_filter_state.dart';
 import 'package:budget_manager/src/features/transaction_subtypes_list/transaction_subtype_chips.dart';
+import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
 import 'package:budget_manager/src/features/utils/mappers.dart';
 import 'package:budget_manager/src/features/widgets/action_buttons_widget.dart';
 import 'package:budget_manager/src/features/widgets/budget_manager_text_field.dart';
 import 'package:budget_manager/src/features/widgets/dialog_date_picker.dart';
 import 'package:budget_manager/src/features/widgets/show_toast.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -73,7 +75,7 @@ class _TransactionFilterScreenState extends BaseWidgetState<
         child: ListView(
           children: [
             _buildTitleRow(
-              'Money',
+              LocaleKeys.money.tr(),
               Icons.account_balance_wallet_rounded,
               context,
             ),
@@ -84,7 +86,7 @@ class _TransactionFilterScreenState extends BaseWidgetState<
                   minAmountTextEditingController.text =
                       controllerInitialValue(state.filter.minAmountOfMoney);
                   return _buildFlexibleTextField(
-                    'From',
+                    LocaleKeys.from.tr(),
                     _hintTextMinAmount,
                     (minAmount) {
                       sendEvent(
@@ -101,7 +103,7 @@ class _TransactionFilterScreenState extends BaseWidgetState<
                   maxAmountTextEditingController.text =
                       controllerInitialValue(state.filter.maxAmountOfMoney);
                   return _buildFlexibleTextField(
-                    'To',
+                    LocaleKeys.to.tr(),
                     _hintTextMaxAmount,
                     (maxAmount) {
                       sendEvent(
@@ -114,14 +116,15 @@ class _TransactionFilterScreenState extends BaseWidgetState<
                 },
               ),
             ),
-            _buildTitleRow('Dates', Icons.date_range, context),
+            _buildTitleRow(
+                LocaleKeys.dates.tr(), Icons.date_range, context),
             _buildRowFromTo(
               context,
               observe(
                 builder: (context, state) {
                   return _buildDateButton(
                     context,
-                    'From',
+                    LocaleKeys.from.tr(),
                     (date) {
                       sendEvent(context, ChooseMinDateEvent(date));
                     },
@@ -133,7 +136,7 @@ class _TransactionFilterScreenState extends BaseWidgetState<
                 builder: (context, state) {
                   return _buildDateButton(
                     context,
-                    'To',
+                    LocaleKeys.to.tr(),
                     (date) {
                       sendEvent(
                         context,
@@ -229,17 +232,18 @@ class _TransactionFilterScreenState extends BaseWidgetState<
       child: observe(
         builder: (context, state) {
           return TransactionSubtypeChips(
-              state.filter.type,
-              state.filter.subtypes ?? [],
-              (subtypes) {
-                sendEvent(
-                  context,
-                  ChooseSubtypesEvent(subtypes),
-                );
-              },
-              _buildTitleRow('Types', Icons.line_style, context, 0),
-              key: ValueKey(state.filter.type),
-             );
+            state.filter.type,
+            state.filter.subtypes ?? [],
+            (subtypes) {
+              sendEvent(
+                context,
+                ChooseSubtypesEvent(subtypes),
+              );
+            },
+            _buildTitleRow(
+                LocaleKeys.types.tr(), Icons.line_style, context, 0),
+            key: ValueKey(state.filter.type),
+          );
         },
       ),
     );

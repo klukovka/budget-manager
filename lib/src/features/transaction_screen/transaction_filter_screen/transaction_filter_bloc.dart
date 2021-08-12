@@ -1,6 +1,8 @@
 import 'package:budget_manager/src/domain/entities/transaction_filter.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_filter_screen/transaction_filter_event.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_filter_screen/transaction_filter_state.dart';
+import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TransactionFilterBloc
@@ -45,7 +47,7 @@ class TransactionFilterBloc
           state.filter.maxAmountOfMoney != null &&
           minAmount > state.filter.maxAmountOfMoney!) {
         yield state.copyWith(
-            minAmountError: 'Money "From" should be less than money "To"');
+            minAmountError: LocaleKeys.moneyLess.tr());
       } else {
         yield state.clearMinAmount(minAmount);
       }
@@ -63,7 +65,7 @@ class TransactionFilterBloc
           state.filter.minAmountOfMoney != null &&
           maxAmount < state.filter.minAmountOfMoney!) {
         yield state.copyWith(
-            maxAmountError: 'Money "To" should be bigger than money "From"');
+            maxAmountError: LocaleKeys.moneyBigger.tr());
       } else {
         yield state.clearMaxAmount(maxAmount);
       }
@@ -91,7 +93,7 @@ class TransactionFilterBloc
         state.filter.minDateOfOperation != null &&
         minDate.isAfter(state.filter.maxDateOfOperation!)) {
       yield state.copyWith(
-          dateError: 'Date "From" should be less than date "To"');
+          dateError: LocaleKeys.dateLess.tr());
     } else {
       yield state.clearMinDate(minDate);
     }
@@ -105,7 +107,7 @@ class TransactionFilterBloc
         state.filter.maxDateOfOperation != null &&
         maxDate.isBefore(state.filter.minDateOfOperation!)) {
       yield state.copyWith(
-          dateError: 'Date "To" should be bigger than date "From"');
+          dateError: LocaleKeys.dateBigger.tr());
     } else {
       yield state.clearMaxDate(maxDate);
     }
