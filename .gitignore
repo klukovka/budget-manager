@@ -59,6 +59,7 @@ analysis_benchmark.json
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+*.g.dart
 *.mocks.dart
 **/generated_plugin_registrant.dart
 .packages

@@ -15,7 +15,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 7, 12),
         dateOfOperation: DateTime(2021, 7, 12),
         subtype: const TransactionSubtype(
-            id: '1', name: 'Transport', type: TransactionType.costs),
+          id: '1',
+          name: 'Transport',
+          type: TransactionType.costs,
+        ),
         title: 'title1'),
     Transaction(
         id: '2',
@@ -23,7 +26,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 7, 14),
         dateOfOperation: DateTime(2021, 7, 14),
         subtype: const TransactionSubtype(
-            id: '2', name: 'Shopping', type: TransactionType.costs),
+          id: '2',
+          name: 'Shopping',
+          type: TransactionType.costs,
+        ),
         title: 'title2'),
     Transaction(
         id: '3',
@@ -31,7 +37,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 7, 18),
         dateOfOperation: DateTime(2021, 7, 14),
         subtype: const TransactionSubtype(
-            id: '3', name: 'Education', type: TransactionType.costs),
+          id: '3',
+          name: 'Education',
+          type: TransactionType.costs,
+        ),
         title: 'title3'),
     Transaction(
         id: '4',
@@ -39,7 +48,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 7, 19),
         dateOfOperation: DateTime(2021, 7, 19),
         subtype: const TransactionSubtype(
-            id: '4', name: 'Hobby', type: TransactionType.costs),
+          id: '4',
+          name: 'Hobby',
+          type: TransactionType.costs,
+        ),
         title: 'title4'),
     Transaction(
         id: '5',
@@ -47,7 +59,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 7, 21),
         dateOfOperation: DateTime(2021, 7, 21),
         subtype: const TransactionSubtype(
-            id: '5', name: 'Salary', type: TransactionType.revenue),
+          id: '5',
+          name: 'Salary',
+          type: TransactionType.revenue,
+        ),
         title: 'title5'),
     Transaction(
         id: '6',
@@ -55,7 +70,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 7, 22),
         dateOfOperation: DateTime(2021, 7, 21),
         subtype: const TransactionSubtype(
-            id: '6', name: 'Gift', type: TransactionType.revenue),
+          id: '6',
+          name: 'Gift',
+          type: TransactionType.revenue,
+        ),
         title: 'title6'),
     Transaction(
         id: '7',
@@ -63,7 +81,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 8),
         dateOfOperation: DateTime(2021, 8),
         subtype: const TransactionSubtype(
-            id: '7', name: 'Part-time job', type: TransactionType.revenue),
+          id: '7',
+          name: 'Part-time job',
+          type: TransactionType.revenue,
+        ),
         title: 'title7'),
     Transaction(
         id: '8',
@@ -71,7 +92,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 8),
         dateOfOperation: DateTime(2021, 8),
         subtype: const TransactionSubtype(
-            id: '1', name: 'Transport', type: TransactionType.costs),
+          id: '1',
+          name: 'Part-time job',
+          type: TransactionType.costs,
+        ),
         title: 'title8'),
     Transaction(
         id: '9',
@@ -79,7 +103,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 8, 2),
         dateOfOperation: DateTime(2021, 8),
         subtype: const TransactionSubtype(
-            id: '2', name: 'Shopping', type: TransactionType.costs),
+          id: '2',
+          name: 'Shopping',
+          type: TransactionType.costs,
+        ),
         title: 'title9'),
     Transaction(
         id: '10',
@@ -87,7 +114,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 8, 3),
         dateOfOperation: DateTime(2021, 8, 3),
         subtype: const TransactionSubtype(
-            id: '3', name: 'Education', type: TransactionType.costs),
+          id: '3',
+          name: 'Education',
+          type: TransactionType.costs,
+        ),
         title: 'title10'),
     Transaction(
         id: '11',
@@ -95,7 +125,10 @@ class MockTransactionRepositoryImpl implements TransactionRepository {
         dateCreate: DateTime(2021, 8, 3),
         dateOfOperation: DateTime(2021, 8, 3),
         subtype: const TransactionSubtype(
-            id: '4', name: 'Hobby', type: TransactionType.costs),
+          id: '4',
+          name: 'Hobby',
+          type: TransactionType.costs,
+        ),
         title: 'title11'),
   ];
 

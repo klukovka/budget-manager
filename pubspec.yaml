@@ -20,6 +20,7 @@ dependencies:
     git:
       url: https://github.com/hitshydev/multiselect_formfield
   intl: ^0.17.0
+  easy_localization: ^3.0.0
 
 dev_dependencies:
   flutter_lints: ^1.0.4
@@ -32,6 +33,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/translations/
   fonts:
     - family: Helvetica
       fonts:

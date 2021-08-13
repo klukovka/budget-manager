@@ -4,7 +4,9 @@ import 'package:budget_manager/src/domain/entities/transaction_sort_params.dart'
 import 'package:budget_manager/src/features/base/base_bloc_widget.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_sort_screen/transaction_sort_bloc.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_sort_screen/transaction_sort_event.dart';
+import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
 import 'package:budget_manager/src/features/widgets/action_buttons_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,21 +37,21 @@ class TransactionSortScreen extends BaseBlocWidget<TransactionSortBloc,
         children: [
           _buildSwitcherWidget(context),
           _buildRadioTileParametr(
-            title: 'Title',
+            title: LocaleKeys.title.tr(),
             value: SortByParametr.title,
             icon: Icons.title_outlined,
           ),
           _buildRadioTileParametr(
-              title: 'Money',
+              title: LocaleKeys.money.tr(),
               value: SortByParametr.amountOfMoney,
               icon: Icons.account_balance_wallet_rounded),
           _buildRadioTileParametr(
-            title: 'Type',
+            title: LocaleKeys.type.tr(),
             value: SortByParametr.subtype,
             icon: Icons.line_style,
           ),
           _buildRadioTileParametr(
-            title: 'Date',
+            title: LocaleKeys.date.tr(),
             value: SortByParametr.dateOfOperation,
             icon: Icons.date_range,
           ),
@@ -68,7 +70,7 @@ class TransactionSortScreen extends BaseBlocWidget<TransactionSortBloc,
   Widget _buildSwitcherWidget(BuildContext context) {
     return ListTile(
       leading: Text(
-        'ASC',
+        LocaleKeys.asc.tr(),
         style: Theme.of(context).textTheme.headline1,
       ),
       title: observe(
@@ -89,7 +91,7 @@ class TransactionSortScreen extends BaseBlocWidget<TransactionSortBloc,
         },
       ),
       trailing: Text(
-        'DESC',
+        LocaleKeys.desc.tr(),
         style: Theme.of(context).textTheme.headline1,
       ),
     );

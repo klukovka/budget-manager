@@ -1,3 +1,5 @@
+import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ActionButtonsWidget extends StatelessWidget {
@@ -16,7 +18,7 @@ class ActionButtonsWidget extends StatelessWidget {
             Navigator.of(context).pop();
           },
           child: Text(
-            'Cancel',
+            LocaleKeys.cancel.tr(),
             style: Theme.of(context).textTheme.headline4,
           ),
         ),
@@ -26,7 +28,7 @@ class ActionButtonsWidget extends StatelessWidget {
             Navigator.of(context).pop();
           },
           child: Text(
-            'Save',
+            LocaleKeys.save.tr(),
             style: Theme.of(context).textTheme.headline3,
           ),
         ),

@@ -14,7 +14,9 @@ import 'package:budget_manager/src/features/transaction_screen/widgets/show_erro
 import 'package:budget_manager/src/features/transaction_screen/widgets/transactions_list.dart';
 import 'package:budget_manager/src/features/transaction_screen/widgets/request_params_bar.dart';
 import 'package:budget_manager/src/features/transaction_screen/widgets/transaction_type_dropdown.dart';
+import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
 import 'package:budget_manager/src/features/utils/mappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class TransactionScreen extends BaseBlocWidget<TransactionScreenBloc,
@@ -51,23 +53,18 @@ class TransactionScreen extends BaseBlocWidget<TransactionScreenBloc,
   @override
   Widget createChild(BuildContext context) {
     return Scaffold(
-      body: Wrap(
-        children: [
-          observe(builder: (context, state) {
-            return RequestParamsBar(state, (event) {
-              sendEvent(context, event);
-            });
-          },),
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: <Widget>[
-              _buildTypeInfoWidget(context),
-              _buildTransactionStateWidget(),
-              _buildDropDown(),
-            ],
-          ),
+      appBar: RequestParamsBar((event) {
+        sendEvent(context, event);
+      }),
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          _buildTypeInfoWidget(context),
+          _buildTransactionStateWidget(),
+          _buildDropDown(),
         ],
       ),
+      drawer: _buildSettingsDrawer(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
@@ -143,7 +140,7 @@ class TransactionScreen extends BaseBlocWidget<TransactionScreenBloc,
         return Padding(
           padding: const EdgeInsets.only(right: 10),
           child: Text(
-            '${state.sum} UAH',
+            '${state.sum} ${LocaleKeys.uah.tr()}',
             style: Theme.of(context).textTheme.headline2,
           ),
         );
@@ -156,7 +153,10 @@ class TransactionScreen extends BaseBlocWidget<TransactionScreenBloc,
       builder: (context, state) {
         return Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: MediaQuery.of(context).size.height <
+                  MediaQuery.of(context).size.width
+              ? MediaQuery.of(context).size.height * 0.6
+              : MediaQuery.of(context).size.height * 0.8,
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
             borderRadius: const BorderRadius.only(
@@ -207,6 +207,46 @@ class TransactionScreen extends BaseBlocWidget<TransactionScreenBloc,
           return const SizedBox();
         }
       },
+    );
+  }
+
+  Drawer _buildSettingsDrawer(BuildContext context) {
+    return Drawer(
+      child: Container(
+        color: Theme.of(context).backgroundColor,
+        padding: const EdgeInsets.all(10),
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                '${LocaleKeys.language.tr()}'
+                ' (${LocaleKeys.languageName.tr()})',
+                style: Theme.of(context).textTheme.headline1,
+              ),
+            ),
+            _buildLanguageButton('English', 'en', context),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: _buildLanguageButton('Українська', 'uk', context),
+            ),
+            _buildLanguageButton('Русский', 'ru', context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLanguageButton(
+      String language, String locale, BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        await context.setLocale(Locale(locale));
+      },
+      child: Text(
+        language,
+        style: Theme.of(context).textTheme.headline2,
+      ),
     );
   }
 }

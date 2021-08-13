@@ -1,6 +1,8 @@
 import 'package:budget_manager/src/domain/entities/transaction.dart';
 import 'package:budget_manager/src/domain/entities/transaction_subtype.dart';
 import 'package:budget_manager/src/domain/entities/transaction_type.dart';
+import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -22,13 +24,13 @@ String mapDateToString(DateTime? date) {
 
 String mapTransactionTypeToString([TransactionType? type]) {
   if (type == TransactionType.costs) {
-    return 'Costs';
+    return LocaleKeys.costs.tr();
   }
 
   if (type == TransactionType.revenue) {
-    return 'Revenue';
+    return LocaleKeys.revenue.tr();
   }
-  return 'All';
+  return LocaleKeys.all.tr();
 }
 
 IconData mapSubtypeToIcon(TransactionSubtype subtype) {

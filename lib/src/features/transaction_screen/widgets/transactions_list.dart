@@ -1,5 +1,7 @@
 import 'package:budget_manager/src/domain/entities/transaction.dart';
 import 'package:budget_manager/src/features/transaction_screen/widgets/transacton_tile.dart';
+import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsList extends StatelessWidget {
@@ -14,7 +16,7 @@ class TransactionsList extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Empty List',
+            LocaleKeys.emptyList.tr(),
             style: Theme.of(context).textTheme.bodyText1,
           ),
           const SizedBox(

@@ -6,7 +6,9 @@ import 'package:budget_manager/src/features/base/base_bloc_widget.dart';
 import 'package:budget_manager/src/features/transaction_screen/widgets/budget_manager_progress_bar.dart';
 import 'package:budget_manager/src/features/transaction_subtypes_list/transaction_subtype_bloc.dart';
 import 'package:budget_manager/src/features/transaction_subtypes_list/transaction_subtype_state.dart';
+import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
 import 'package:budget_manager/src/features/utils/mappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
@@ -47,7 +49,7 @@ class TransactionSubtypeChips extends BaseBlocWidget<TransactionSubtypeBloc,
           border: const OutlineInputBorder(borderSide: BorderSide(width: 2.0)),
           validator: (value) {
             if (value == null || value.length == 0) {
-              return 'Please select one or more options';
+              return LocaleKeys.chooseType.tr();
             }
           },
           chipBackGroundColor: Theme.of(context).backgroundColor,
@@ -60,9 +62,9 @@ class TransactionSubtypeChips extends BaseBlocWidget<TransactionSubtypeBloc,
           dataSource: mapSubtypeListToMap(state.subtypes),
           textField: 'display',
           valueField: 'value',
-          okButtonLabel: 'Save',
-          cancelButtonLabel: 'Cancel',
-          hintWidget: const Text('Please choose one or more'),
+          okButtonLabel: LocaleKeys.save.tr(),
+          cancelButtonLabel: LocaleKeys.cancel.tr(),
+          hintWidget: Text(LocaleKeys.chooseType.tr()),
           initialValue: subtypes,
           onSaved: (value) {
             if (value is List<dynamic>) {
