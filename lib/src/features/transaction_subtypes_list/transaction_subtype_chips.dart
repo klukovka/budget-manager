@@ -1,8 +1,9 @@
-import 'package:budget_manager/src/data/repositories/mock_transaction_subtype_repository_impl.dart';
+import 'package:budget_manager/injection.dart';
 import 'package:budget_manager/src/domain/entities/transaction_subtype.dart';
 import 'package:budget_manager/src/domain/entities/transaction_type.dart';
 import 'package:budget_manager/src/domain/interactors/get_transaction_subtype_by_type_interactor.dart';
 import 'package:budget_manager/src/features/base/base_bloc_widget.dart';
+import 'package:budget_manager/src/features/get_it_container/get_it_provider.dart';
 import 'package:budget_manager/src/features/transaction_screen/widgets/budget_manager_progress_bar.dart';
 import 'package:budget_manager/src/features/transaction_subtypes_list/transaction_subtype_bloc.dart';
 import 'package:budget_manager/src/features/transaction_subtypes_list/transaction_subtype_state.dart';
@@ -12,6 +13,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
+import 'package:provider/provider.dart';
 
 class TransactionSubtypeChips extends BaseBlocWidget<TransactionSubtypeBloc,
     TransactionSubtypeState, TransactionType?> {
@@ -30,8 +32,10 @@ class TransactionSubtypeChips extends BaseBlocWidget<TransactionSubtypeBloc,
 
   @override
   TransactionSubtypeBloc createBloc(BuildContext context) {
-    return TransactionSubtypeBloc(GetTransactionSubtypeByTypeInteractor(
-        MockTransactionSubtypeRepositoryImpl()));
+    final getItProvider = Provider.of<GetItProvider>(context, listen: false);
+    return TransactionSubtypeBloc(
+      getItProvider.getTransactionSubtypeByTypeInteractor,
+    );
   }
 
   @override

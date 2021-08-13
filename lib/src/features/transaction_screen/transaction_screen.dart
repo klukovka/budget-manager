@@ -1,4 +1,4 @@
-import 'package:budget_manager/src/data/repositories/mock_transaction_repository_impl.dart';
+import 'package:budget_manager/injection.dart';
 import 'package:budget_manager/src/domain/entities/transaction_filter.dart';
 import 'package:budget_manager/src/domain/entities/transaction_request_params.dart';
 import 'package:budget_manager/src/domain/entities/transaction_sort_params.dart';
@@ -6,6 +6,7 @@ import 'package:budget_manager/src/domain/interactors/calculate_sum_of_transacti
 import 'package:budget_manager/src/domain/interactors/get_transaction_with_request_params_interactor.dart';
 import 'package:budget_manager/src/domain/interactors/remove_transaction_interactor.dart';
 import 'package:budget_manager/src/features/base/base_bloc_widget.dart';
+import 'package:budget_manager/src/features/get_it_container/get_it_provider.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_screen_bloc.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_screen_event.dart';
 import 'package:budget_manager/src/features/transaction_screen/transaction_screen_state.dart';
@@ -18,6 +19,7 @@ import 'package:budget_manager/src/features/translations/locale_keys.g.dart';
 import 'package:budget_manager/src/features/utils/mappers.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TransactionScreen extends BaseBlocWidget<TransactionScreenBloc,
     TransactionScreenState, TransactionScreenEvent> {
@@ -27,11 +29,11 @@ class TransactionScreen extends BaseBlocWidget<TransactionScreenBloc,
 
   @override
   TransactionScreenBloc createBloc(BuildContext context) {
-    final _repository = MockTransactionRepositoryImpl();
+    final getItProvider = Provider.of<GetItProvider>(context, listen: false);
     return TransactionScreenBloc(
-      CalculateSumOfTransactionInteractor(_repository),
-      GetTransactionWithRequestParamsInteractor(_repository),
-      RemoveTransactionInteractor(_repository),
+      getItProvider.calculateSumOfTransactionInteractor,
+      getItProvider.getTransactionWithRequestParamsInteractor,
+      getItProvider.removeTransactionInteractor,
     );
   }
 

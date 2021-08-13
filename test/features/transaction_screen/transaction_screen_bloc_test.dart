@@ -15,6 +15,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'transaction_screen_bloc_test.mocks.dart';
+
 
 @GenerateMocks([
   GetTransactionWithRequestParamsInteractor,

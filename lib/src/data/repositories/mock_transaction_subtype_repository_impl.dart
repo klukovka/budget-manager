@@ -1,7 +1,11 @@
 import 'package:budget_manager/src/domain/entities/transaction_type.dart';
 import 'package:budget_manager/src/domain/entities/transaction_subtype.dart';
 import 'package:budget_manager/src/domain/repositories/transaction_subtype_repository.dart';
+import 'package:budget_manager/src/features/utils/env.dart';
+import 'package:injectable/injectable.dart';
 
+
+@Injectable(as: TransactionSubtypeRepository, env: [Env.devStatic])
 class MockTransactionSubtypeRepositoryImpl
     implements TransactionSubtypeRepository {
   List<TransactionSubtype> subtypes = [

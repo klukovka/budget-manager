@@ -3,7 +3,9 @@ import 'package:budget_manager/src/domain/entities/transaction_filter.dart';
 import 'package:budget_manager/src/domain/entities/transaction_type.dart';
 import 'package:budget_manager/src/domain/interactors/base_interactor.dart';
 import 'package:budget_manager/src/domain/repositories/transaction_repository.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class CalculateSumOfTransactionInteractor
     implements BaseInteractor<TransactionFilter, double> {
   CalculateSumOfTransactionInteractor(this._repository);

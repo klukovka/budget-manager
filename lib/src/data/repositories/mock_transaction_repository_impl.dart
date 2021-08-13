@@ -6,7 +6,10 @@ import 'package:budget_manager/src/domain/entities/transaction.dart';
 import 'package:budget_manager/src/domain/entities/transaction_subtype.dart';
 import 'package:budget_manager/src/domain/entities/transaction_type.dart';
 import 'package:budget_manager/src/domain/repositories/transaction_repository.dart';
+import 'package:budget_manager/src/features/utils/env.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: TransactionRepository, env: [Env.devStatic])
 class MockTransactionRepositoryImpl implements TransactionRepository {
   List<Transaction> transactions = [
     Transaction(
