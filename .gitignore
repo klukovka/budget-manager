@@ -61,6 +61,7 @@ analysis_benchmark.json
 .flutter-plugins-dependencies
 *.g.dart
 *.mocks.dart
+*.config.dart
 **/generated_plugin_registrant.dart
 .packages
 .pub-cache/

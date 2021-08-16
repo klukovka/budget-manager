@@ -21,6 +21,9 @@ dependencies:
       url: https://github.com/hitshydev/multiselect_formfield
   intl: ^0.17.0
   easy_localization: ^3.0.0
+  injectable: ^1.4.1
+  get_it: ^7.2.0
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_lints: ^1.0.4
@@ -30,6 +33,7 @@ dev_dependencies:
   build_runner: ^2.1.1
   mockito: ^5.0.14
   bloc_test: ^8.1.0
+  injectable_generator: ^1.4.1
 
 flutter:
   uses-material-design: true
